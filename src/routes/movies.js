@@ -17,9 +17,13 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const newMovie = new Movie(req.body);
-    const saveMovie = await newMovie.save();
-    res.status(200).send("Movie Created Successfully");
+    if (newMovie) {
+      const newMovie = new Movie(req.body);
+      const saveMovie = await newMovie.save();
+      res.status(200).send("Movie Created Successfully");
+    } else {
+      res.status(401).send("Values are Empty");
+    }
   } catch (err) {
     res.status(500).send("Something Went Wrong. Try Again Later.");
   }
